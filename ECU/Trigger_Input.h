@@ -12,8 +12,12 @@
       public:
         typedef struct
         {
-          unsigned int    us;
-          float           freq;
+          float     us;
+          float     freq;
+          float     usPerDegree;
+          bool      isInCalc;
+          float     advanceTime;
+          float     usForCalc;
         } s_TRIGGER;
 
       //****************************
@@ -23,7 +27,15 @@
          // constructor
          TriggerInput();
 
-         void init(void);
+         void   init(void);
+         float  GetFreq(void);
+         float  GetUsPerDegree(void);
+         bool   GetTrigged(void);
+         void   SetInCalc(bool val);
+         bool   GetInCalc(void);
+
+         void   SetAdvanceTime(float time);
+         float  GetTimeForCal(void);
    };
 #endif
 
