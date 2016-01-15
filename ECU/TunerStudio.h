@@ -56,43 +56,46 @@ class TunerStudio
         } persistent_config_s;
 
 
+
+
+
+
+   /**
+     * please be aware that 'float' (F32) type requires TunerStudio version 2.6 and later
+     */
+    typedef struct {
+        // primary instrument cluster gauges
+          uint32_t rpm; // size 4, offset 0
+        float coolant_temperature; // size 4, offset 4
+        float intakeAirTemperature; // size 4, offset 8
+        float throttlePositon; // size 4, offset 12
+        float massAirFlowVoltage; // size 4, offset 16
+        float airFuelRatio; // size 4, offset 20
+        float engineLoad; // size 4, offset 24
+        float vBatt; // size 4, offset 28
+        short int tpsADC; // size 2, offset 32
+        short int alignment; // size 2, offset 34
+        float baroPressure; // size 4, offset 36
+        float manifold_air_pressure; // size 4, offset 40
+        uint32_t  checkEngine; // size 4, offset 44
+   } TunerStudioOutputChannels;
+
+
+
+  
         TunerStudio();
         void runtime(void);
         void ProcessCmd(uint8_t car);
 
     private:
 
-        void _execute(void);
+        //void _execute(void);
         void _SendIdent(void);
+        void _OutputChannel( void );
         void _SendSignature(void);
         void _ReadPage( void );
+        void _UpdateValue( void );
+        void _WritePage( void );
+        void _SavePage( void );
 };
-
-#if 0
-extern persistent_config_s configWorkingCopy;
-extern FlashState flashState;
-
-#define  TUNER_BUF_SIZE 256
-
-struct tuner_cmd_tbl_s {
-	UINT8 		*name;      /* Command Name         */
-	UINT16      maxargs; /* maximum number of arguments   */
-	UINT16      repeatable; /* autorepeat allowed?     */
-	INT16    	(*cmd)(); /* Implementation function */
-	UINT8    	*usage;     /* Usage message  (short)  */
-};
-
-typedef struct tuner_cmd_tbl_s   tuner_cmd_tbl_t;
-
-
-
-UINT8 TUNER_GetC(void);
-UINT16 TUNER_ReadInt16(void);
-void TUNER_PutC(UINT8 car);
-void TUNER_PutS(char * pFormat,...);
-void TUNER_Put(UINT8* buffer,int size);
-void TUNERSTUDIO_Init(void);
-void TUNERSTUDIO_Sync(void) ;
-
-#endif
 #endif
