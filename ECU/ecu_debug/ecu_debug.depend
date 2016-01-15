@@ -1,0 +1,15 @@
+# depslib dependency file v1.0
+1452864442 source:c:\_kimo_\arduino_ecu\ecu\advance_table.cpp
+	"Advance_Table.h"
+
+1452864043 c:\_kimo_\arduino_ecu\ecu\advance_table.h
+	<Arduino.h>
+	<stdint.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+
+1452864533 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\main.cpp
+	<stdio.h>
+	"../Advance_Table.h"
+
