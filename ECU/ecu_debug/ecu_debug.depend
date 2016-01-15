@@ -9,7 +9,27 @@
 	<stdio.h>
 	<stdlib.h>
 
-1452864533 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\main.cpp
+1452871693 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\main.cpp
 	<stdio.h>
 	"../Advance_Table.h"
+	"../TunerStudio.h"
+
+1452869066 source:c:\_kimo_\arduino_ecu\ecu\tuner_command.cpp
+	"TunerStudio.h"
+	"TUNER_command.h"
+	"tunerstudio_configuration.h"
+
+1452872468 c:\_kimo_\arduino_ecu\ecu\tunerstudio.h
+	<Arduino.h>
+	<stdint.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+
+1452869066 c:\_kimo_\arduino_ecu\ecu\tuner_command.h
+
+1452872570 source:c:\_kimo_\arduino_ecu\ecu\tunerstudio.cpp
+	<stdarg.h>
+	"TunerStudio.h"
+	"TUNER_command.h"
 

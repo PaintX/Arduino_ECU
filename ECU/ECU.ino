@@ -1,5 +1,6 @@
 #include <TaskScheduler.h>
 #include "Trigger_Input.h"
+#include "TunerStudio.h"
 #include <LiquidCrystal.h>
 #include "TimerOne.h"
 
@@ -7,6 +8,7 @@
 
 Scheduler runner;
 TriggerInput _Trigger;
+TunerStudio _Tunner;
 Task t2(250, TASK_FOREVER, &t2Callback);
 LiquidCrystal lcd(8,9,4,5,6,7);
 
@@ -21,14 +23,14 @@ void t2Callback(void)
   lcd.print(" rpm   ");
   
   // put your main code here, to run repeatedly:
-  Serial.print(_Trigger.GetFreq());
-  Serial.print(" Hz ");
-  float delay_ms = _Trigger.GetUsPerDegree() * DEGREE_FOR_CALC;
-  Serial.print(delay_ms);
-  Serial.println(" us ");
+  //Serial.print(_Trigger.GetFreq());
+  //Serial.print(" Hz ");
+  //float delay_ms = _Trigger.GetUsPerDegree() * DEGREE_FOR_CALC;
+  //Serial.print(delay_ms);
+  //Serial.println(" us ");
 
-  Serial.print(_Trigger.GetTimeForCal());
-  Serial.println(" us "); 
+  //Serial.print(_Trigger.GetTimeForCal());
+  //Serial.println(" us "); 
 }
 
 
@@ -48,4 +50,5 @@ void setup()
 void loop() 
 {
   runner.execute();
+  _Tunner.runtime();
 }

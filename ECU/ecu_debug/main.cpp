@@ -1,14 +1,15 @@
 #include <stdio.h>
 #include "../Advance_Table.h"
-
+#include "../TunerStudio.h"
 
 
 AdvanceTable adv;
-
+TunerStudio     _Tuner;
 int main()
 {
-    int val = adv.get3DTableValue(0,1600);
-
-    printf("%d \r\n ",val);
+    while ( true )
+    {
+       _Tuner.execute();
+    }
     return 0;
 }

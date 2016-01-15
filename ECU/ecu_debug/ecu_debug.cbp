@@ -32,6 +32,12 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="../Advance_Table.cpp" />
+		<Unit filename="../Advance_Table.h" />
+		<Unit filename="../TUNER_command.cpp" />
+		<Unit filename="../TUNER_command.h" />
+		<Unit filename="../TunerStudio.cpp" />
+		<Unit filename="../TunerStudio.h" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
