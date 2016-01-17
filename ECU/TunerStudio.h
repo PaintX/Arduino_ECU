@@ -65,7 +65,7 @@ class TunerStudio
      */
     typedef struct {
         // primary instrument cluster gauges
-          uint32_t rpm; // size 4, offset 0
+        uint32_t rpm; // size 4, offset 0
         float coolant_temperature; // size 4, offset 4
         float intakeAirTemperature; // size 4, offset 8
         float throttlePositon; // size 4, offset 12
@@ -78,6 +78,7 @@ class TunerStudio
         float baroPressure; // size 4, offset 36
         float manifold_air_pressure; // size 4, offset 40
         uint32_t  checkEngine; // size 4, offset 44
+        float advance;// size 4, offset 48
    } TunerStudioOutputChannels;
 
 

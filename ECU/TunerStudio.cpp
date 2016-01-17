@@ -2,7 +2,8 @@
 //#include <stdarg.h>
 #include "TunerStudio.h"
 #include "Trigger_Input.h"
-//#include "TUNER_command.h"
+#include "Variables.h"
+
 //---------- Variables ----------
 #if defined(ARDUINO)
 
@@ -31,6 +32,8 @@ extern TriggerInput _Trigger;
  */
 TunerStudio::persistent_config_s        configWorkingCopy;
 TunerStudio::TunerStudioOutputChannels  tsOutputChannels;
+TunerStudio::persistent_config_s        flashState;
+
 
 uint16_t _ReadInt16(void)
 {
@@ -179,8 +182,8 @@ void TunerStudio::_UpdateValue( void )
    tsOutputChannels.manifold_air_pressure =     MAP_GetVal();*/
 
    tsOutputChannels.rpm = (_Trigger.GetFreq() * 60) / 2;
+   
    tsOutputChannels.vBatt = analogRead(0);
-
    tsOutputChannels.vBatt *= (float)(5.0/1023.0);
    tsOutputChannels.vBatt += 7.0;
 }
@@ -216,7 +219,7 @@ void TunerStudio::_SavePage( void )
    pageId = _ReadInt16();
 
    // todo: how about some multi-threading?
-    //memcpy(&flashState.persistentConfiguration, &configWorkingCopy, sizeof(persistent_config_s));
+    memcpy(&flashState, &configWorkingCopy, sizeof(persistent_config_s));
 
   //CONFIG_Save();
 }

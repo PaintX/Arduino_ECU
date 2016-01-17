@@ -43,7 +43,10 @@ void _trigPIN3(void)
   Timer1.attachInterrupt(_EndOfCalc);  
 
   //-- debut des calculs
-  trig.advanceTime = 1000 - JIT_DELAY_FOR_IT;
+
+
+
+
   
 }
 
@@ -53,6 +56,7 @@ TriggerInput::TriggerInput()
   ms = 0;
   trig.us = 0;
   trig.freq = 0.0;
+  pinMode(3,INPUT);
 }
 
 void TriggerInput::init(void)

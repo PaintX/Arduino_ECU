@@ -1,5 +1,6 @@
 #include <TaskScheduler.h>
 #include "Trigger_Input.h"
+#include "Trigger_Output.h"
 #include "TunerStudio.h"
 #include <LiquidCrystal.h>
 #include "TimerOne.h"
@@ -42,49 +43,27 @@ int read_LCD_buttons()
  return btnNONE;  // when all others fail, return this...
 }
 
-
+long interval = 10;
+bool state = LOW ;
 void t3Callback(void) 
 {
-  digitalWrite(2,HIGH);
- switch (read_LCD_buttons())               // depending on which button was pushed, we perform an action
- {
-   case btnRIGHT:
-     {
-     break;
-     }
-   case btnLEFT:
-     {
-     break;
-     }
-   case btnUP:
-     {
-      t3.setInterval(t3.getInterval()-1);
-     break;
-     }
-   case btnDOWN:
-     {
-      t3.setInterval(t3.getInterval()+1);
-     break;
-     }
-   case btnSELECT:
-     {
-     break;
-     }
-     case btnNONE:
-     {
-     break;
-     }
- }
-  digitalWrite(2,LOW);
+   state ^= 1;
+ //digitalWrite(2,state);
 }
 
 
 void t2Callback(void) 
 {
   lcd.setCursor(0,0);            // move cursor to second line "1" and 9 spaces over
+  lcd.print("       ");
+
+  lcd.setCursor(0,0);
   //lcd.print(_Trigger.GetFreq());
   //lcd.print(" Hz   ");
+  
   lcd.print((uint32_t)(millis()/1000.0));
+  
+  //lcd.print(interval);
   lcd.setCursor(0,1);            // move cursor to second line "1" and 9 spaces over
   
   lcd.print( (_Trigger.GetFreq() * 60) / 2 );
@@ -110,17 +89,70 @@ void setup()
   Serial1.begin(9600);
   Serial.begin(115200);
 
+  pinMode(2,OUTPUT);
   pinMode(13,OUTPUT);
   digitalWrite(13,LOW);
   _Trigger.init();
   runner.addTask(t2);
   t2.enable();
-    runner.addTask(t3);
-  t3.enable();
+  //  runner.addTask(t3);
+  //t3.enable();
+  analogWrite(10, 128);
+  setPwmFrequency(10,1024);
+
 }
 
+unsigned long tick;
 void loop() 
 {
   runner.execute();
   _Tunner.runtime();
+
+
+/*
+if ( (millis() - tick ) > 100)
+{
+  tick = millis();
+ switch (read_LCD_buttons())               // depending on which button was pushed, we perform an action
+ {
+   case btnRIGHT:
+     {
+     break;
+     }
+   case btnLEFT:
+     {
+     break;
+     }
+   case btnUP:
+     {
+      interval--;
+            if( interval <= 0 )
+        interval = 1;
+        t3.setInterval(interval);
+     break;
+     }
+   case btnDOWN:
+     {
+      interval++;
+            if( interval <= 0 )
+        interval = 1;
+        t3.setInterval(interval);
+     break;
+     }
+   case btnSELECT:
+     {
+     break;
+     }
+     case btnNONE:
+     {
+
+      
+     break;
+     }
+ }
+
+}*/
+
+
+  
 }
