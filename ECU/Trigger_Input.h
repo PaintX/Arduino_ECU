@@ -18,6 +18,8 @@
           bool      isInCalc;
           float     advanceTime;
           float     usForCalc;
+          float     rpm;
+          
         } s_TRIGGER;
 
       //****************************
@@ -33,9 +35,10 @@
          bool   GetTrigged(void);
          void   SetInCalc(bool val);
          bool   GetInCalc(void);
-
+        float GetAdvanceTime(void);
          void   SetAdvanceTime(float time);
          float  GetTimeForCal(void);
+         float GetRpm(void);
    };
 #endif
 

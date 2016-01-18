@@ -3,12 +3,14 @@
 #include "TunerStudio.h"
 #include "Trigger_Input.h"
 #include "Variables.h"
+#include "ECU_Config.h"
+
+
+//#define  DEBUG_TUNERSTUDIO
+
 
 //---------- Variables ----------
-#if defined(ARDUINO)
-
-#define   SERIAL_PORT       Serial1
-#define   SERIAL_DEBUG       Serial
+  
   char _getC(void)
   {
     while( !SERIAL_PORT.available() ){}
@@ -18,11 +20,6 @@
     #define COMM_GET_CHAR()             _getC()
     #define COMM_WRITE(X,Y)             SERIAL_PORT.write(X,Y); SERIAL_PORT.flush()
     #define COMM_SEND(X)                SERIAL_PORT.print(X); SERIAL_PORT.flush()
-#else
-    #define COMM_AVAILABLE_CHAR()       true
-    #define COMM_GET_CHAR()             getchar()
-    #define COMM_WRITE(X,Y)
-#endif // defined
 
 
 extern TriggerInput _Trigger;
@@ -73,8 +70,34 @@ char *_getWorkingPageAddr(int pageIndex) {
 TunerStudio::TunerStudio()
 {
     #if defined(ARDUINO)
-    //-- creation d'une tache
 
+    #if 0
+      //-- creation d'une tache
+      for ( int i = 0 ; i < IGN_LOAD_COUNT ; i++ )
+      {
+        for ( int j = 0 ; j < IGN_RPM_COUNT ; j++ )
+        {
+          flashState.engineConfiguration.ignitionTable[i][j] = 0.0 + j;
+        }
+      }
+  
+      flashState.engineConfiguration.ignitionLoadBins[0] = 0;
+      flashState.engineConfiguration.ignitionLoadBins[1] = 1013;
+  
+      for ( int i = 0 ; i < IGN_RPM_COUNT ; i++ )
+        flashState.engineConfiguration.ignitionRpmBins[i] = i * 500.0;
+        
+      for ( int i = 0 ; i < IGN_LOAD_COUNT ; i++ )    
+        flashState.engineConfiguration.ignitionLoadBins[i] = i * 100;
+        
+      flashState.engineConfiguration.ignitionOffset = 0.0;
+    #else
+      uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
+      for (int i = 0 ; i < sizeof(engine_configuration_s) ; i++ )
+      {
+        ptr[i] = EEPROM.read(i);
+      }
+    #endif
     #endif // defined
 }
 
@@ -94,49 +117,65 @@ void TunerStudio::ProcessCmd(uint8_t car)
     {
         case ( 'Q' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
           SERIAL_DEBUG.println("Q");
+          #endif
             _SendIdent();
            //_SendSignature();
             break;
         }
         case ( 'H' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
           SERIAL_DEBUG.println("H");
+          #endif
           _SendSignature();
           break;
         }
         case ( 'S' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
             SERIAL_DEBUG.println("S");
+            #endif
             _SendSignature();
             break;
         }
         case ( 'C' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
           SERIAL_DEBUG.println("C");
+          #endif
           _ReadPage();
           break;
         }
         case ( 'O' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
           SERIAL_DEBUG.println("O");
+          #endif
           _OutputChannel();
           break;
         }
         case ( 'W' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
           SERIAL_DEBUG.println("W");
+          #endif
           _WritePage();
             break;
         }
         case ( 'F' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
           SERIAL_DEBUG.println("F");
+          #endif
             break;
         }
         case ( 'B' ):
         {
+          #ifdef DEBUG_TUNERSTUDIO
           SERIAL_DEBUG.println("B");
+          #endif
           _SavePage();
             break;
         }
@@ -145,13 +184,18 @@ void TunerStudio::ProcessCmd(uint8_t car)
 
 void TunerStudio::_SendIdent(void)
 {
+  #ifdef DEBUG_TUNERSTUDIO
   SERIAL_DEBUG.print("ECUFor126     8.0.0");
+  #endif
   COMM_SEND("ECUFor126     8.0.0");
 }
 void TunerStudio::_SendSignature(void)
 {
+  
     COMM_SEND("MShift v0.01");
+    #ifdef DEBUG_TUNERSTUDIO
     SERIAL_DEBUG.print("MShift v0.01");
+    #endif
 }
 
 void  TunerStudio::_ReadPage( void )
@@ -181,8 +225,9 @@ void TunerStudio::_UpdateValue( void )
    tsOutputChannels.atmospherePressure =        ATMO_GetVal();
    tsOutputChannels.manifold_air_pressure =     MAP_GetVal();*/
 
-   tsOutputChannels.rpm = (_Trigger.GetFreq() * 60) / 2;
-   
+   tsOutputChannels.rpm = _Trigger.GetRpm();
+   tsOutputChannels.advance = _Trigger.GetAdvanceTime();
+   tsOutputChannels.coolant_temperature = _Trigger.GetAdvanceTime();
    tsOutputChannels.vBatt = analogRead(0);
    tsOutputChannels.vBatt *= (float)(5.0/1023.0);
    tsOutputChannels.vBatt += 7.0;
@@ -203,13 +248,6 @@ void TunerStudio::_WritePage( void )
   value = COMM_GET_CHAR();
   _getWorkingPageAddr(pageId)[offset] = value;
 
-/*
-  SERIAL_DEBUG.print("page id : ");
-  SERIAL_DEBUG.println(pageId);
-  SERIAL_DEBUG.print("offset : ");
-  SERIAL_DEBUG.println(offset);
-  SERIAL_DEBUG.print("value : ");
-  SERIAL_DEBUG.println(value);*/
 }
 
 
@@ -221,6 +259,12 @@ void TunerStudio::_SavePage( void )
    // todo: how about some multi-threading?
     memcpy(&flashState, &configWorkingCopy, sizeof(persistent_config_s));
 
+    uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
+    for (int i = 0 ; i < sizeof(engine_configuration_s) ; i++ )
+    {
+      EEPROM.update(i,ptr[i]);
+    }
+      
   //CONFIG_Save();
 }
 

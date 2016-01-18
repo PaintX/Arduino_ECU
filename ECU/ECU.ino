@@ -1,11 +1,13 @@
+#include <EEPROM.h>
 #include <TaskScheduler.h>
 #include "Trigger_Input.h"
 #include "Trigger_Output.h"
 #include "TunerStudio.h"
 #include <LiquidCrystal.h>
 #include "TimerOne.h"
+#include "ECU_Config.h"
+#include "advance_map.h"
 
-#define   DEGREE_FOR_CALC   45.0
 void t2Callback(void) ;
 void t3Callback(void) ;
 
@@ -14,9 +16,7 @@ TriggerInput _Trigger;
 TunerStudio _Tunner;
 
 Task t2(250, TASK_FOREVER, &t2Callback);
-Task t3(10, TASK_FOREVER, &t3Callback);
 LiquidCrystal lcd(8,9,4,5,6,7);
-
 
 
 #define btnRIGHT  0
@@ -43,14 +43,6 @@ int read_LCD_buttons()
  return btnNONE;  // when all others fail, return this...
 }
 
-long interval = 10;
-bool state = LOW ;
-void t3Callback(void) 
-{
-   state ^= 1;
- //digitalWrite(2,state);
-}
-
 
 void t2Callback(void) 
 {
@@ -58,15 +50,16 @@ void t2Callback(void)
   lcd.print("       ");
 
   lcd.setCursor(0,0);
+  lcd.print(_Trigger.GetAdvanceTime());
   //lcd.print(_Trigger.GetFreq());
   //lcd.print(" Hz   ");
   
-  lcd.print((uint32_t)(millis()/1000.0));
+ // lcd.print((uint32_t)(millis()/1000.0));
   
   //lcd.print(interval);
   lcd.setCursor(0,1);            // move cursor to second line "1" and 9 spaces over
   
-  lcd.print( (_Trigger.GetFreq() * 60) / 2 );
+  lcd.print( _Trigger.GetRpm() );
   lcd.print(" rpm   ");
   
   // put your main code here, to run repeatedly:
@@ -95,19 +88,18 @@ void setup()
   _Trigger.init();
   runner.addTask(t2);
   t2.enable();
-  //  runner.addTask(t3);
-  //t3.enable();
-  analogWrite(10, 128);
-  setPwmFrequency(10,1024);
+
+
+  //analogWrite(10, 128);
+  //setPwmFrequency(10,1024);
 
 }
 
 unsigned long tick;
 void loop() 
-{
+{  
   runner.execute();
   _Tunner.runtime();
-
 
 /*
 if ( (millis() - tick ) > 100)

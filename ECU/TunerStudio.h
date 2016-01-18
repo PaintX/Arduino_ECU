@@ -3,6 +3,7 @@
 
 #if defined(ARDUINO) && ARDUINO >= 100
    #include <Arduino.h>
+   #include <EEPROM.h>
 #else
     #include <stdint.h>
     #include <stddef.h>
@@ -77,8 +78,9 @@ class TunerStudio
         short int alignment; // size 2, offset 34
         float baroPressure; // size 4, offset 36
         float manifold_air_pressure; // size 4, offset 40
-        uint32_t  checkEngine; // size 4, offset 44
-        float advance;// size 4, offset 48
+        float advance;// size 4, offset 44
+        uint32_t  checkEngine; // size 4, offset 48
+        
    } TunerStudioOutputChannels;
 
 

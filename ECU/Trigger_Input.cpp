@@ -1,5 +1,7 @@
 #include "Trigger_Input.h"
 #include "TimerOne.h"
+#include "advance_map.h"
+#include "ECU_Config.h"
 
 unsigned long ms;
 unsigned long us;
@@ -10,13 +12,13 @@ TriggerInput::s_TRIGGER   trig;
 void _DwellTime ( void )
 {
   Timer1.stop();
-  digitalWrite(13,LOW);
+ // digitalWrite(13,LOW);
 }
 
 void _EndOfAdvance ( void )
 {
   Timer1.stop();
-  digitalWrite(13,HIGH);
+  //digitalWrite(13,HIGH);
   Timer1.initialize(3000);
   Timer1.attachInterrupt(_DwellTime);
 }
@@ -36,18 +38,17 @@ void _trigPIN3(void)
   us = micros();
   trig.us = us - ms;
   ms = us;
-  trig.freq = (1.0/trig.us);
-  trig.usPerDegree = ((float)trig.us / 360.0);
-    
+
   Timer1.initialize(trig.usPerDegree * 45.0);
   Timer1.attachInterrupt(_EndOfCalc);  
-
+  digitalWrite(13,HIGH);
   //-- debut des calculs
-
-
-
-
-  
+  trig.freq = (1.0/trig.us)*1000000.0;
+  trig.usPerDegree = ((float)trig.us / 360.0);
+  trig.rpm = (trig.freq * 60) / 2;
+ 
+  trig.advanceTime = getAdvance(trig.rpm , 0);
+digitalWrite(13,LOW);
 }
 
 //-- init
@@ -64,9 +65,14 @@ void TriggerInput::init(void)
     attachInterrupt(digitalPinToInterrupt(3), _trigPIN3, RISING); 
 }
 
+float TriggerInput::GetRpm(void)
+{
+  return trig.rpm;
+}
+
 float TriggerInput::GetFreq(void)
 {
-  return trig.freq*1000000.0;
+  return trig.freq;
 }
 
 float TriggerInput::GetUsPerDegree(void)
@@ -88,6 +94,10 @@ void   TriggerInput::SetAdvanceTime(float time)
   trig.advanceTime = time;
 }
 
+float TriggerInput::GetAdvanceTime(void)
+{
+  return trig.advanceTime;
+}
 float TriggerInput::GetTimeForCal(void)
 {
   return trig.usForCalc;
