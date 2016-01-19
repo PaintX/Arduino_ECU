@@ -10,7 +10,7 @@ void setup()
     SERIAL_PORT.begin(115200);
 
     TUNER_Init();
-    LCD_Init(16,2);
+    LCD_Init(LCD_ROW,LCD_LINE);
 
 }
 

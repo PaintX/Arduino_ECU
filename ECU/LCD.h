@@ -6,4 +6,5 @@
 void LCD_Init(int col , int lin);
 void LCD_SetRefreshPeriode(uint16_t ms);
 void LCD_Execute(void);
+void LCD_SetPosition(uint8_t x , uint8_t y);
 #endif

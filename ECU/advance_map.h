@@ -16,13 +16,8 @@
 
 #include "ECU_Config.h"
 #include "TunerStudio.h"
-/*
-#define AD_LOAD_COUNT 16
-#define AD_RPM_COUNT 16
-*/
 
 
-
-float getAdvance(float rpm, float engineLoad);
+float IGN_GetAdvance(float rpm, float engineLoad);
 
 #endif /* ADVANCE_H_ */

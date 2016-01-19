@@ -48,8 +48,10 @@
 		<Unit filename="../advance_map.h" />
 		<Unit filename="../interpolation.cpp" />
 		<Unit filename="include/Console.h" />
+		<Unit filename="include/xml.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Console.cpp" />
+		<Unit filename="src/xml.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

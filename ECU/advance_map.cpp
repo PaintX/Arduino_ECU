@@ -22,11 +22,11 @@
 
 float getBaseAdvance(float rpm, float engineLoad)
 {
-    float * ptr = flashState.engineConfiguration.ignitionTable[0];
+  float * ptr = flashState.engineConfiguration.ignitionTable[0];
 	return interpolate3d(engineLoad , flashState.engineConfiguration.ignitionLoadBins , IGN_LOAD_COUNT , rpm,flashState.engineConfiguration.ignitionRpmBins , IGN_RPM_COUNT ,  ptr);
 }
 
-float getAdvance(float rpm, float engineLoad)
+float IGN_GetAdvance(float rpm, float engineLoad)
 {
 /*	if (isCrankingR(rpm))
 		return engineConfiguration->ignitionOffset;*/

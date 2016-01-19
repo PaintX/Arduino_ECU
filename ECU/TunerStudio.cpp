@@ -101,11 +101,11 @@ static void _SavePage( void )
    // todo: how about some multi-threading?
     memcpy(&flashState, &configWorkingCopy, sizeof(persistent_config_s));
 
- /*   uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
+    uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
     for (int i = 0 ; i < sizeof(engine_configuration_s) ; i++ )
     {
       EEPROM.update(i,ptr[i]);
-    }*/
+    }
 }
 
 
@@ -114,11 +114,28 @@ static void _OutputChannel( void )
   SERIAL_PORT.write((uint8_t*)&tsOutputChannels,sizeof(TunerStudioOutputChannels));
 }
 
+
+void _UpdateValue( void )
+{
+   /*tsOutputChannels.rpm =                       RPM_GetVal();
+   tsOutputChannels.coolant_temperature =       COOLANT_GetVal();
+   tsOutputChannels.atmospherePressure =        ATMO_GetVal();
+   tsOutputChannels.manifold_air_pressure =     MAP_GetVal();*/
+
+   tsOutputChannels.rpm = TRIGGER_GetRpm();
+   tsOutputChannels.advance = TRIGGER_GetAdvanceTime();
+   tsOutputChannels.coolant_temperature = TRIGGER_GetAdvanceTime();
+   /*tsOutputChannels.vBatt = analogRead(0);
+   tsOutputChannels.vBatt *= (float)(5.0/1023.0);
+   tsOutputChannels.vBatt += 7.0;*/
+}
+
+
 static void _ProcessCmd(void)
 {
     uint8_t car = _ReadInt8();
 
-   // _UpdateValue();
+    _UpdateValue();
     switch ( car )
     {
         case ( 'Q' ):
@@ -168,7 +185,11 @@ static void _ProcessCmd(void)
 
 void TUNER_Init(void)
 {
-
+     uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
+      for (int i = 0 ; i < sizeof(engine_configuration_s) ; i++ )
+      {
+        ptr[i] = EEPROM.read(i);
+      }
 }
 
 void TUNER_Execute(void)

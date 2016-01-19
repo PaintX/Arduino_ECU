@@ -18,7 +18,8 @@ void TRIGGER_Init(void);
 void TRIGGER_Execute(void);
 
 float TRIGGER_GetFreq(void);
-
+float TRIGGER_GetRpm(void);
+float TRIGGER_GetAdvanceTime(void);
 
 
 

@@ -20,6 +20,23 @@ void Console::begin(int val)
 
 }
 
+void Console::begin(uint8_t x, uint8_t y)
+{
+    _COORD coord;
+    coord.X = x;
+    coord.Y = y;
+
+    _SMALL_RECT Rect;
+    Rect.Top = 0;
+    Rect.Left = 0;
+    Rect.Bottom = coord.Y - 1;
+    Rect.Right = coord.X - 1;
+
+    HANDLE Handle = GetStdHandle(STD_OUTPUT_HANDLE);      // Get Handle
+    SetConsoleScreenBufferSize(Handle, coord);            // Set Buffer Size
+    SetConsoleWindowInfo(Handle, TRUE, &Rect);            // Set Window Size
+}
+
 void Console::print(char * str)
 {
     printf("%s",str);
@@ -71,4 +88,16 @@ void Console::write(uint8_t * tab , uint16_t size)
     {
         printf("%c" , tab[i]);
     }
+}
+
+void Console::setCursor(uint8_t x, uint8_t y)
+{
+
+    HANDLE hStdOut = ::GetStdHandle(STD_OUTPUT_HANDLE); // console output handle
+    COORD dwCursorPosition;
+    DWORD nb;
+    dwCursorPosition.X = x;
+    dwCursorPosition.Y = y;
+    ::SetConsoleCursorPosition(hStdOut,dwCursorPosition);
+    //::WriteConsoleOutputCharacter(hStdOut, _T("foo_bar"), 7, dwCursorPosition, &nb);
 }
