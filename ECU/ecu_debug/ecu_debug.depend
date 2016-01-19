@@ -9,18 +9,19 @@
 	<stdio.h>
 	<stdlib.h>
 
-1452871693 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\main.cpp
+1453214472 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\main.cpp
 	<stdio.h>
-	"../Advance_Table.h"
-	"../TunerStudio.h"
+	"Console.h"
+	"../ECU.ino"
 
 1452869066 source:c:\_kimo_\arduino_ecu\ecu\tuner_command.cpp
 	"TunerStudio.h"
 	"TUNER_command.h"
 	"tunerstudio_configuration.h"
 
-1452872468 c:\_kimo_\arduino_ecu\ecu\tunerstudio.h
+1453218342 c:\_kimo_\arduino_ecu\ecu\tunerstudio.h
 	<Arduino.h>
+	<EEPROM.h>
 	<stdint.h>
 	<stddef.h>
 	<stdio.h>
@@ -28,8 +29,107 @@
 
 1452869066 c:\_kimo_\arduino_ecu\ecu\tuner_command.h
 
-1452872570 source:c:\_kimo_\arduino_ecu\ecu\tunerstudio.cpp
-	<stdarg.h>
+1453218342 source:c:\_kimo_\arduino_ecu\ecu\tunerstudio.cpp
+	"ECU_Config.h"
 	"TunerStudio.h"
-	"TUNER_command.h"
+	"TunerStudio.h"
+	"Trigger_Input.h"
+	"Variables.h"
+	"ECU_Config.h"
+
+1453218439 c:\_kimo_\arduino_ecu\ecu\ecu.ino
+	"ECU_Config.h"
+	"LCD.h"
+	"TunerStudio.h"
+	"Trigger_Input.h"
+	<EEPROM.h>
+	<TaskScheduler.h>
+	"Trigger_Input.h"
+	"Trigger_Output.h"
+	"TunerStudio.h"
+	<LiquidCrystal.h>
+	"TimerOne.h"
+	"ECU_Config.h"
+	"advance_map.h"
+
+1453219772 c:\_kimo_\arduino_ecu\ecu\trigger_input.h
+	<Arduino.h>
+	<WProgram.h>
+
+1453101502 c:\_kimo_\arduino_ecu\ecu\trigger_output.h
+	<Arduino.h>
+	<WProgram.h>
+
+1452849572 c:\_kimo_\arduino_ecu\ecu\timerone.h
+	"Arduino.h"
+	"WProgram.h"
+	"known_16bit_timers.h"
+
+1452843363 c:\_kimo_\arduino_ecu\ecu\known_16bit_timers.h
+
+1453219883 c:\_kimo_\arduino_ecu\ecu\ecu_config.h
+	<Arduino.h>
+	<LiquidCrystal.h>
+	"TunerStudio.h"
+	<stdint.h>
+	<stddef.h>
+	<stdio.h>
+	<conio.h>
+	<stdlib.h>
+	<string.h>
+	"Console.h"
+	<ctime>
+	"Trigger_Input.h"
+
+1453217721 c:\_kimo_\arduino_ecu\ecu\advance_map.h
+	<Arduino.h>
+	"ECU_Config.h"
+	"TunerStudio.h"
+
+1453220005 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\src\console.cpp
+	"Console.h"
+	"../../ECU_Config.h"
+
+1453220011 c:\_kimo_\arduino_ecu\ecu\ecu_debug\include\console.h
+	"ECU_Config.h"
+
+1453205577 c:\_kimo_\arduino_ecu\ecu\ecu_debug\taskscheduler-master\src\taskscheduler.h
+	<Arduino.h>
+	"ECU_Config.h"
+	<avr/sleep.h>
+	<avr/power.h>
+
+1453219973 source:c:\_kimo_\arduino_ecu\ecu\lcd.cpp
+	"LCD.h"
+
+1453210410 c:\_kimo_\arduino_ecu\ecu\lcd.h
+	"ECU_Config.h"
+
+1453101502 c:\_kimo_\arduino_ecu\ecu\variables.h
+	<Arduino.h>
+	"TunerStudio.h"
+	<stdint.h>
+	<stddef.h>
+	<stdio.h>
+	<stdlib.h>
+
+1453217745 source:c:\_kimo_\arduino_ecu\ecu\advance_map.cpp
+	"advance_map.h"
+	"interpolation.h"
+
+1453217675 c:\_kimo_\arduino_ecu\ecu\interpolation.h
+	"Arduino.h"
+	"ECU_Config.h"
+
+1453217818 source:c:\_kimo_\arduino_ecu\ecu\interpolation.cpp
+	<math.h>
+	"interpolation.h"
+
+1453220104 source:c:\_kimo_\arduino_ecu\ecu\trigger_input.cpp
+	"ECU_Config.h"
+	"Trigger_Input.h"
+	"Trigger_Input.h"
+	"TimerOne.h"
+	"advance_map.h"
+	"ECU_Config.h"
 

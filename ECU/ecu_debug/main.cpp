@@ -1,15 +1,18 @@
 #include <stdio.h>
-#include "../Advance_Table.h"
-#include "../TunerStudio.h"
+#include "Console.h"
 
 
-AdvanceTable adv;
-TunerStudio     _Tuner;
+
+void setup();
+void loop();
+
 int main()
 {
-    while ( true )
+    setup();
+    while ( 1 )
     {
-       _Tuner.execute();
+        loop();
     }
-    return 0;
 }
+
+#include "../ECU.ino"

@@ -20,21 +20,13 @@
 #include "advance_map.h"
 #include "interpolation.h"
 
-//#include "engine_configuration.h"
-//#include "engine_math.h"
-
-
-//static float *timing_ptrs[AD_LOAD_COUNT];
-//tatic int initialized = FALSE;
-
 float getBaseAdvance(float rpm, float engineLoad)
 {
-  float * ptr = flashState.engineConfiguration.ignitionTable[0];
-  
-	return interpolate3d(engineLoad , flashState.engineConfiguration.ignitionLoadBins , AD_LOAD_COUNT , rpm,flashState.engineConfiguration.ignitionRpmBins , AD_RPM_COUNT ,  ptr);
+    float * ptr = flashState.engineConfiguration.ignitionTable[0];
+	return interpolate3d(engineLoad , flashState.engineConfiguration.ignitionLoadBins , IGN_LOAD_COUNT , rpm,flashState.engineConfiguration.ignitionRpmBins , IGN_RPM_COUNT ,  ptr);
 }
 
-float getAdvance(float rpm, float engineLoad) 
+float getAdvance(float rpm, float engineLoad)
 {
 /*	if (isCrankingR(rpm))
 		return engineConfiguration->ignitionOffset;*/

@@ -1,3 +1,5 @@
+#if 0
+
 #include "Trigger_Output.h"
 #include "Variables.h"
 
@@ -68,3 +70,4 @@ void setPwmFrequency(int pin, int divisor) {
     
   }
 }
+#endif

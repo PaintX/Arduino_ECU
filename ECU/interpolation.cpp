@@ -43,11 +43,12 @@ float interpolate(float x1, float y1, float x2, float y2, float x) {
  * @returns	the highest index within sorted array such that array[i] is greater than or equal to the parameter
  * @note If the parameter is smaller than the first element of the array, -1 is returned.
  */
-int findIndex(float * array, int size, float value) 
+int findIndex(float * array, int size, float value)
 {
+#ifdef 	DEBUG_INTERPOLATION
 	if (isnan(value))
 		SERIAL_DEBUG.println("NaN in findIndex");
-
+#endif
 	if (value < array[0])
 		return -1;
 	int middle;
@@ -55,11 +56,12 @@ int findIndex(float * array, int size, float value)
 	int left = 0;
 	int right = size;
 
-	while (1) 
+	while (1)
 	{
+#ifdef 	DEBUG_INTERPOLATION
 		if (size-- == 0)
 			SERIAL_DEBUG.println("Unexpected state in binary search.");
-
+#endif
 		middle = (left + right) / 2;
 
 //		print("left=%d middle=%d right=%d: %f\r\n", left, middle, right, array[middle]);
@@ -67,15 +69,15 @@ int findIndex(float * array, int size, float value)
 		if (middle == left)
 			break;
 
-		if (value < array[middle]) 
+		if (value < array[middle])
 		{
 			right = middle;
-		} 
-		else if (value > array[middle]) 
+		}
+		else if (value > array[middle])
 		{
 			left = middle;
-		} 
-		else 
+		}
+		else
 		{
 			break;
 		}
@@ -102,8 +104,8 @@ float interpolate2d(float value, float bin[], float values[], int size) {
  */
 float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], int yBinSize, float* map)
 {
-   uint8_t tabStr[16];   
-	if (isnan(x)) 
+   uint8_t tabStr[16];
+	if (isnan(x))
    {
 #ifdef 	DEBUG_INTERPOLATION
     SERIAL_DEBUG.print(x);
@@ -111,7 +113,7 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
 #endif
 		return NAN;
 	}
-	if (isnan(y)) 
+	if (isnan(y))
    {
 #ifdef 	DEBUG_INTERPOLATION
     SERIAL_DEBUG.print(y);
@@ -131,7 +133,7 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
     SERIAL_DEBUG.println(yIndex);
     SERIAL_DEBUG.println();
 #endif
-	if (xIndex < 0 && yIndex < 0) 
+	if (xIndex < 0 && yIndex < 0)
    {
 #ifdef	DEBUG_INTERPOLATION
       SERIAL_DEBUG.print("X and Y are smaller than smallest cell in table: ");
@@ -142,7 +144,7 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
 		//return map2[0][0];
 	}
 
-	if (xIndex < 0) 
+	if (xIndex < 0)
    {
 #ifdef	DEBUG_INTERPOLATION
     SERIAL_DEBUG.print("X is smaller than smallest cell in table: ");
@@ -152,7 +154,7 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
 		//return map2[0][yIndex];
 	}
 
-	if (yIndex < 0) 
+	if (yIndex < 0)
    {
 #ifdef	DEBUG_INTERPOLATION
     SERIAL_DEBUG.print("Y is smaller than smallest cell in table: ");
@@ -162,20 +164,20 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
 		//return map2[xIndex][0];
 	}
 
-	if (xIndex == xBinSize - 1 && yIndex == yBinSize - 1) 
+	if (xIndex == xBinSize - 1 && yIndex == yBinSize - 1)
    {
 #ifdef	DEBUG_INTERPOLATION
       SERIAL_DEBUG.print("X and Y are larger than largest cell in table: ");
       SERIAL_DEBUG.print(xIndex);
       SERIAL_DEBUG.print(" ");
       SERIAL_DEBUG.println(yIndex);
-      
+
  //  	CONS_Debug("X and Y are larger than largest cell in table: %d %d\r\n", xIndex, yIndex);
 #endif
 		//return map2[xBinSize - 1][yBinSize - 1];
 	}
 
-	if (xIndex == xBinSize - 1) 
+	if (xIndex == xBinSize - 1)
    {
 #ifdef	DEBUG_INTERPOLATION
       SERIAL_DEBUG.print("TODO BETTER LOGGING x overflow ");
@@ -186,7 +188,7 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
 		//return map2[xBinSize - 1][yIndex];
 	}
 
-	if (yIndex == yBinSize - 1) 
+	if (yIndex == yBinSize - 1)
    {
 #ifdef	DEBUG_INTERPOLATION
       SERIAL_DEBUG.print("Y is larger than largest cell in table: ");
@@ -201,14 +203,14 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
 	 * first we find the interpolated value for this RPM
 	 */
 	int rpmMaxIndex = xIndex + 1;
-	
+
 	float xMin = xBin[xIndex];
 	float xMax = xBin[xIndex + 1];
 
 	//sprintf(tabStr,"%.3f",map[((UINT32)xIndex * (UINT32)xBinSize) + (UINT32)yIndex]);
  //  float rpmMinKeyMinValue = atof(tabStr);
   float rpmMinKeyMinValue = map[((uint32_t)xIndex * (uint32_t)xBinSize) + (uint32_t)yIndex];
-   
+
   // sprintf(tabStr,"%.3f",map[((UINT32)(xIndex+1) * (UINT32)xBinSize) + (UINT32)yIndex]);
 //	float rpmMaxKeyMinValue = atof(tabStr);
   float rpmMaxKeyMinValue = map[((uint32_t)(xIndex+1) * (uint32_t)xBinSize) + (uint32_t)yIndex];
@@ -230,16 +232,16 @@ float interpolate3d(float x, float * xBin, int xBinSize, float y, float yBin[], 
 	int keyMaxIndex = yIndex + 1;
 	float keyMin = yBin[yIndex];
 	float keyMax = yBin[keyMaxIndex];
-	
+
 	//sprintf(tabStr,"%.3f",map[((UINT32)xIndex * (UINT32)yBinSize) + (UINT32)keyMaxIndex]);
 	//float rpmMinKeyMaxValue = atof(tabStr);
 	float rpmMinKeyMaxValue = map[((uint32_t)xIndex * (uint32_t)yBinSize) + (uint32_t)keyMaxIndex];
 
-  
+
 	//sprintf(tabStr,"%.3f",map[((UINT32)rpmMaxIndex * (UINT32)yBinSize) + (UINT32)keyMaxIndex]);
 	//float rpmMaxKeyMaxValue = atof(tabStr);
   float rpmMaxKeyMaxValue = map[((uint32_t)rpmMaxIndex * (uint32_t)yBinSize) + (uint32_t)keyMaxIndex];
-  
+
 	float keyMaxValue = interpolate(xMin, rpmMinKeyMaxValue, xMax, rpmMaxKeyMaxValue, x);
 
 #ifdef	DEBUG_INTERPOLATION

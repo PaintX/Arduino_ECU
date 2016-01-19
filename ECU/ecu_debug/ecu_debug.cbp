@@ -13,6 +13,9 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-g" />
+					<Add directory="include" />
+					<Add directory="TaskScheduler-master/src" />
+					<Add directory="../../ECU" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -22,6 +25,7 @@
 				<Option compiler="gcc" />
 				<Compiler>
 					<Add option="-O2" />
+					<Add directory="include" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -32,13 +36,20 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
-		<Unit filename="../Advance_Table.cpp" />
-		<Unit filename="../Advance_Table.h" />
-		<Unit filename="../TUNER_command.cpp" />
-		<Unit filename="../TUNER_command.h" />
+		<Unit filename="../ECU.ino" />
+		<Unit filename="../ECU_Config.h" />
+		<Unit filename="../LCD.cpp" />
+		<Unit filename="../LCD.h" />
+		<Unit filename="../Trigger_Input.cpp" />
+		<Unit filename="../Trigger_Input.h" />
 		<Unit filename="../TunerStudio.cpp" />
 		<Unit filename="../TunerStudio.h" />
+		<Unit filename="../advance_map.cpp" />
+		<Unit filename="../advance_map.h" />
+		<Unit filename="../interpolation.cpp" />
+		<Unit filename="include/Console.h" />
 		<Unit filename="main.cpp" />
+		<Unit filename="src/Console.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

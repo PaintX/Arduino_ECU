@@ -9,10 +9,11 @@
 #define INTERPOLATION_3D_H_
 
 #if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
+    #include "Arduino.h"
 #else
-#include "WProgram.h"
+
 #endif
+
 #include "ECU_Config.h"
 
 int   findIndex(float array[], int size, float value);

@@ -1,4 +1,185 @@
+#include "ECU_Config.h"
+#include "TunerStudio.h"
 
+
+/**
+ * this is a local copy of the configuration. Any changes to this copy
+ * have no effect until this copy is explicitly propagated to the main working copy
+ */
+persistent_config_s        configWorkingCopy;
+TunerStudioOutputChannels  tsOutputChannels;
+persistent_config_s        flashState;
+
+
+static void _SendSignature(void)
+{
+    SERIAL_PORT.print("MShift v0.01");
+}
+
+static void _SendIdent(void)
+{
+    SERIAL_PORT.print("ECUFor126     8.0.0");
+}
+
+
+static uint8_t _ReadInt8(void)
+{
+    while ( SERIAL_PORT.available() == 0 ){}
+    return SERIAL_PORT.read();
+}
+
+static uint16_t _ReadInt16(void)
+{
+   uint8_t val8;
+   uint16_t val16;
+
+   val16 = 0;
+   val8 = _ReadInt8();
+   val16 |= _ReadInt8();
+   val16 = val16 << 8;
+   val16 |= val8;
+
+   return val16;
+}
+
+static int _getTunerStudioPageSize(int pageIndex)
+{
+	switch (pageIndex)
+	{
+        case 0:
+            return sizeof(configWorkingCopy.engineConfiguration);
+    /*	case 1:
+            return sizeof(configWorkingCopy.boardConfiguration);*/
+    }
+	return 0;
+}
+
+static uint8_t *_getWorkingPageAddr(int pageIndex) {
+	switch (pageIndex) {
+	case 0:
+		return (uint8_t*) &configWorkingCopy.engineConfiguration;
+/*	case 1:
+		return (char*) &configWorkingCopy.boardConfiguration;*/
+	}
+	return NULL;
+}
+
+static void  _ReadPage( void )
+{
+    uint16_t pageId;
+    uint32_t sizePage;
+    uint8_t * ptr;
+
+    pageId = _ReadInt16();
+    sizePage = _getTunerStudioPageSize(pageId);
+    ptr = _getWorkingPageAddr(pageId);
+
+    SERIAL_PORT.write(ptr,sizePage);
+}
+
+/**
+ * 'Write' command receives a single value at a given offset
+ */
+static void _WritePage( void )
+{
+    uint16_t pageId;
+    uint32_t   offset;
+    uint8_t    value;
+
+    pageId = _ReadInt16();
+    offset = _ReadInt16();
+    value = _ReadInt8();
+    _getWorkingPageAddr(pageId)[offset] = value;
+}
+
+
+static void _SavePage( void )
+{
+   uint16_t pageId;
+   pageId = _ReadInt16();
+
+   // todo: how about some multi-threading?
+    memcpy(&flashState, &configWorkingCopy, sizeof(persistent_config_s));
+
+ /*   uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
+    for (int i = 0 ; i < sizeof(engine_configuration_s) ; i++ )
+    {
+      EEPROM.update(i,ptr[i]);
+    }*/
+}
+
+
+static void _OutputChannel( void )
+{
+  SERIAL_PORT.write((uint8_t*)&tsOutputChannels,sizeof(TunerStudioOutputChannels));
+}
+
+static void _ProcessCmd(void)
+{
+    uint8_t car = _ReadInt8();
+
+   // _UpdateValue();
+    switch ( car )
+    {
+        case ( 'Q' ):
+        {
+            _SendIdent();
+            break;
+        }
+        case ( 'H' ):
+        {
+          _SendSignature();
+          break;
+        }
+        case ( 'S' ):
+        {
+            _SendSignature();
+            break;
+        }
+        case ( 'C' ):
+        {
+          _ReadPage();
+          break;
+        }
+        case ( 'O' ):
+        {
+            _OutputChannel();
+            break;
+        }
+        case ( 'W' ):
+        {
+            _WritePage();
+            break;
+        }
+        case ( 'F' ):
+        {
+          #ifdef DEBUG_TUNERSTUDIO
+          SERIAL_DEBUG.println("F");
+          #endif
+            break;
+        }
+        case ( 'B' ):
+        {
+            _SavePage();
+            break;
+        }
+    }
+}
+
+void TUNER_Init(void)
+{
+
+}
+
+void TUNER_Execute(void)
+{
+    if ( SERIAL_PORT.available())
+    {
+        _ProcessCmd();
+    }
+}
+
+#if 0
 //#include <stdarg.h>
 #include "TunerStudio.h"
 #include "Trigger_Input.h"
@@ -10,7 +191,7 @@
 
 
 //---------- Variables ----------
-  
+
   char _getC(void)
   {
     while( !SERIAL_PORT.available() ){}
@@ -80,16 +261,16 @@ TunerStudio::TunerStudio()
           flashState.engineConfiguration.ignitionTable[i][j] = 0.0 + j;
         }
       }
-  
+
       flashState.engineConfiguration.ignitionLoadBins[0] = 0;
       flashState.engineConfiguration.ignitionLoadBins[1] = 1013;
-  
+
       for ( int i = 0 ; i < IGN_RPM_COUNT ; i++ )
         flashState.engineConfiguration.ignitionRpmBins[i] = i * 500.0;
-        
-      for ( int i = 0 ; i < IGN_LOAD_COUNT ; i++ )    
+
+      for ( int i = 0 ; i < IGN_LOAD_COUNT ; i++ )
         flashState.engineConfiguration.ignitionLoadBins[i] = i * 100;
-        
+
       flashState.engineConfiguration.ignitionOffset = 0.0;
     #else
       uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
@@ -191,7 +372,7 @@ void TunerStudio::_SendIdent(void)
 }
 void TunerStudio::_SendSignature(void)
 {
-  
+
     COMM_SEND("MShift v0.01");
     #ifdef DEBUG_TUNERSTUDIO
     SERIAL_DEBUG.print("MShift v0.01");
@@ -203,7 +384,7 @@ void  TunerStudio::_ReadPage( void )
     uint16_t pageId,i;
     uint32_t sizePage;
     char* ptr;
-    
+
     pageId = _ReadInt16();
     sizePage = _getTunerStudioPageSize(pageId);
     ptr = _getWorkingPageAddr(pageId);
@@ -242,7 +423,7 @@ void TunerStudio::_WritePage( void )
   uint16_t pageId;
   uint32_t   offset;
   uint8_t    value;
-  
+
   pageId = _ReadInt16();
   offset = _ReadInt16();
   value = COMM_GET_CHAR();
@@ -264,7 +445,8 @@ void TunerStudio::_SavePage( void )
     {
       EEPROM.update(i,ptr[i]);
     }
-      
+
   //CONFIG_Save();
 }
 
+#endif

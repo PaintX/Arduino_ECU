@@ -1,6 +1,29 @@
 #ifndef _TRIGGER_INPUT_H_
 #define _TRIGGER_INPUT_H_
 
+typedef struct
+{
+    float     us;
+    float     freq;
+    float     usPerDegree;
+    bool      isInCalc;
+    float     advanceTime;
+    float     usForCalc;
+    float     rpm;
+
+} s_TRIGGER;
+
+
+void TRIGGER_Init(void);
+void TRIGGER_Execute(void);
+
+float TRIGGER_GetFreq(void);
+
+
+
+
+
+#if 0
 #if defined(ARDUINO) && ARDUINO >= 100
    #include <Arduino.h>
 #else
@@ -19,13 +42,13 @@
           float     advanceTime;
           float     usForCalc;
           float     rpm;
-          
+
         } s_TRIGGER;
 
       //****************************
       //  Configuration
       //****************************
-      
+
          // constructor
          TriggerInput();
 
@@ -40,5 +63,6 @@
          float  GetTimeForCal(void);
          float GetRpm(void);
    };
+   #endif
 #endif
 
