@@ -71,7 +71,7 @@ extern persistent_config_s        flashState;
 
 void TUNER_Init(void);
 void TUNER_Execute(void);
-
+bool TUNER_IsConnected(void);
 
 
 

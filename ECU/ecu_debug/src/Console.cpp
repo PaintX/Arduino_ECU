@@ -42,6 +42,10 @@ void Console::print(char * str)
     printf("%s",str);
 }
 
+void Console::print(const char * str)
+{
+    printf("%s",str);
+}
 void Console::print(float val)
 {
     printf("%0.2f",val);

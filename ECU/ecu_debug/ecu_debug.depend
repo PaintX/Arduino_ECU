@@ -9,8 +9,9 @@
 	<stdio.h>
 	<stdlib.h>
 
-1453214472 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\main.cpp
+1453274546 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\main.cpp
 	<stdio.h>
+	"xml.h"
 	"Console.h"
 	"../ECU.ino"
 
@@ -29,7 +30,7 @@
 
 1452869066 c:\_kimo_\arduino_ecu\ecu\tuner_command.h
 
-1453218342 source:c:\_kimo_\arduino_ecu\ecu\tunerstudio.cpp
+1453284737 source:c:\_kimo_\arduino_ecu\ecu\tunerstudio.cpp
 	"ECU_Config.h"
 	"TunerStudio.h"
 	"TunerStudio.h"
@@ -37,7 +38,7 @@
 	"Variables.h"
 	"ECU_Config.h"
 
-1453218439 c:\_kimo_\arduino_ecu\ecu\ecu.ino
+1453274546 c:\_kimo_\arduino_ecu\ecu\ecu.ino
 	"ECU_Config.h"
 	"LCD.h"
 	"TunerStudio.h"
@@ -52,7 +53,7 @@
 	"ECU_Config.h"
 	"advance_map.h"
 
-1453219772 c:\_kimo_\arduino_ecu\ecu\trigger_input.h
+1453274546 c:\_kimo_\arduino_ecu\ecu\trigger_input.h
 	<Arduino.h>
 	<WProgram.h>
 
@@ -67,7 +68,8 @@
 
 1452843363 c:\_kimo_\arduino_ecu\ecu\known_16bit_timers.h
 
-1453219883 c:\_kimo_\arduino_ecu\ecu\ecu_config.h
+1453285250 c:\_kimo_\arduino_ecu\ecu\ecu_config.h
+	<EEPROM.h>
 	<Arduino.h>
 	<LiquidCrystal.h>
 	"TunerStudio.h"
@@ -77,20 +79,23 @@
 	<conio.h>
 	<stdlib.h>
 	<string.h>
+	<windows.h>
 	"Console.h"
 	<ctime>
+	"xml.h"
 	"Trigger_Input.h"
+	"TunerStudio.h"
 
-1453217721 c:\_kimo_\arduino_ecu\ecu\advance_map.h
+1453274546 c:\_kimo_\arduino_ecu\ecu\advance_map.h
 	<Arduino.h>
 	"ECU_Config.h"
 	"TunerStudio.h"
 
-1453220005 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\src\console.cpp
+1453278754 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\src\console.cpp
 	"Console.h"
 	"../../ECU_Config.h"
 
-1453220011 c:\_kimo_\arduino_ecu\ecu\ecu_debug\include\console.h
+1453278754 c:\_kimo_\arduino_ecu\ecu\ecu_debug\include\console.h
 	"ECU_Config.h"
 
 1453205577 c:\_kimo_\arduino_ecu\ecu\ecu_debug\taskscheduler-master\src\taskscheduler.h
@@ -99,10 +104,10 @@
 	<avr/sleep.h>
 	<avr/power.h>
 
-1453219973 source:c:\_kimo_\arduino_ecu\ecu\lcd.cpp
+1453274546 source:c:\_kimo_\arduino_ecu\ecu\lcd.cpp
 	"LCD.h"
 
-1453210410 c:\_kimo_\arduino_ecu\ecu\lcd.h
+1453274546 c:\_kimo_\arduino_ecu\ecu\lcd.h
 	"ECU_Config.h"
 
 1453101502 c:\_kimo_\arduino_ecu\ecu\variables.h
@@ -113,7 +118,7 @@
 	<stdio.h>
 	<stdlib.h>
 
-1453217745 source:c:\_kimo_\arduino_ecu\ecu\advance_map.cpp
+1453274546 source:c:\_kimo_\arduino_ecu\ecu\advance_map.cpp
 	"advance_map.h"
 	"interpolation.h"
 
@@ -125,9 +130,10 @@
 	<math.h>
 	"interpolation.h"
 
-1453220104 source:c:\_kimo_\arduino_ecu\ecu\trigger_input.cpp
+1453285227 source:c:\_kimo_\arduino_ecu\ecu\trigger_input.cpp
 	"ECU_Config.h"
 	"Trigger_Input.h"
+	"advance_map.h"
 	"Trigger_Input.h"
 	"TimerOne.h"
 	"advance_map.h"
@@ -256,4 +262,40 @@
 	"xml.h"
 	"../../ECU_Config.h"
 	<fstream>
+
+1453274546 c:\_kimo_\arduino_ecu\ecu\ecu_debug\include\xml.h
+	"ECU_Config.h"
+
+1453275609 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\src\pugixml.cpp
+	"pugixml.hpp"
+	<stdlib.h>
+	<stdio.h>
+	<string.h>
+	<assert.h>
+	<limits.h>
+	<wchar.h>
+	<math.h>
+	<float.h>
+	<setjmp.h>
+	<istream>
+	<ostream>
+	<string>
+	<new>
+	<stdint.h>
+
+1445192150 c:\_kimo_\arduino_ecu\ecu\ecu_debug\include\pugixml.hpp
+	"pugiconfig.hpp"
+	<stddef.h>
+	<exception>
+	<iterator>
+	<iosfwd>
+	<string>
+
+1445192150 c:\_kimo_\arduino_ecu\ecu\ecu_debug\include\pugiconfig.hpp
+
+1453285118 source:c:\_kimo_\arduino_ecu\ecu\ecu_debug\src\xml.cpp
+	"xml.h"
+	"../../ECU_Config.h"
+	<fstream>
+	"pugixml.hpp"
 

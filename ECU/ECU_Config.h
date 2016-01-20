@@ -20,6 +20,7 @@
 #endif
 
 #include "Trigger_Input.h"
+#include "TunerStudio.h"
 
 #if defined(ARDUINO)
 

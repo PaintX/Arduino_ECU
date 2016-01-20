@@ -11,7 +11,7 @@ void setup()
 
     TUNER_Init();
     LCD_Init(LCD_ROW,LCD_LINE);
-
+    LCD_SetRefreshPeriode(250);
 }
 
 void loop()

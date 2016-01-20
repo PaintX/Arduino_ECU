@@ -8,15 +8,29 @@
 
 static uint32_t _Tick;
 static uint16_t _Periode = 1000;
-
+static bool     printT = false;
 static void _Refresh(void)
 {
     LCD_SetPosition(0,0);
     LCD.print("RPM : ");
-    LCD.print(TRIGGER_GetRpm());
+    LCD.print(TRIGGER_GetRpm(),0);
     LCD_SetPosition(0,1);
     LCD.print("ADV : ");
     LCD.print(TRIGGER_GetAdvanceTime());
+
+    LCD_SetPosition(15,0);
+  if ( printT == false )
+  {
+    printT = true;
+    LCD.print(" ");
+  }
+  else
+  {
+    if ( TUNER_IsConnected() )
+      LCD.print("T");
+    printT = false;
+    
+  }
 }
 
 void LCD_Init(int col , int lin)

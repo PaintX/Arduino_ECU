@@ -14,6 +14,7 @@ class Console
         bool available(void);
         uint8_t read(void);
         void print(char * str);
+        void print(const char * str);
         void print(float val);
         void print(float val,int dec);
         void println(char * str);

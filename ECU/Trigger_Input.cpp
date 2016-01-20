@@ -25,7 +25,7 @@ void _TrigISR(void)
 
   _trig.advanceTime = IGN_GetAdvance(_trig.rpm , 0);
 
-  
+
 }
 
 float TRIGGER_GetAdvanceTime(void)
@@ -42,10 +42,12 @@ float TRIGGER_GetFreq(void)
 {
     return _trig.freq;
 }
-
+static uint32_t us = MICROS();
 void TRIGGER_Init(void)
 {
+    us = MICROS();
 #ifndef SIMU_TRIGGER
+
     pinMode(3,INPUT);
     attachInterrupt(digitalPinToInterrupt(3), _trigPIN3, RISING);
 #endif
@@ -54,9 +56,9 @@ void TRIGGER_Init(void)
 void TRIGGER_Execute(void)
 {
 #ifdef SIMU_TRIGGER
-    static uint32_t us = MICROS();
+
     //-- pour simulation
-    if ( (MICROS() - us ) >= 5000 )
+    if ( (uint32_t)(MICROS() - us ) >= 20000 )
     {
         _TrigISR();
         us = MICROS();

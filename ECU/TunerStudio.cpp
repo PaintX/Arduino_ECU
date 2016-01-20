@@ -124,7 +124,7 @@ void _UpdateValue( void )
 
    tsOutputChannels.rpm = TRIGGER_GetRpm();
    tsOutputChannels.advance = TRIGGER_GetAdvanceTime();
-   tsOutputChannels.coolant_temperature = TRIGGER_GetAdvanceTime();
+   //tsOutputChannels.coolant_temperature = TRIGGER_GetAdvanceTime();
    /*tsOutputChannels.vBatt = analogRead(0);
    tsOutputChannels.vBatt *= (float)(5.0/1023.0);
    tsOutputChannels.vBatt += 7.0;*/
@@ -182,13 +182,20 @@ static void _ProcessCmd(void)
         }
     }
 }
+static bool _TunerIsConnected = false;
 
+bool TUNER_IsConnected(void)
+{
+  return _TunerIsConnected;
+}
+static uint32_t   _timeOut = MILLIS();
 void TUNER_Init(void)
 {
      uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
       for (int i = 0 ; i < sizeof(engine_configuration_s) ; i++ )
       {
-        ptr[i] = EEPROM.read(i);
+        *ptr = EEPROM.read(i);
+        ptr++;
       }
 }
 
@@ -196,7 +203,14 @@ void TUNER_Execute(void)
 {
     if ( SERIAL_PORT.available())
     {
+        _TunerIsConnected = true;
         _ProcessCmd();
+        _timeOut = MILLIS();
+    }
+
+    if ( (uint32_t)(MILLIS() - _timeOut) > 2000 )
+    {
+      _TunerIsConnected = false;
     }
 }
 
