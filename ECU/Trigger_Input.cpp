@@ -18,14 +18,18 @@ void _TrigISR(void)
   Timer1.attachInterrupt(_EndOfCalc);
 #endif
 
-  //-- debut des calculs
-  _trig.freq = (1.0/_trig.us)*1000000.0;
-  _trig.usPerDegree = ((float)_trig.us / 360.0);
-  _trig.rpm = (_trig.freq * 60) / 2;
+    //-- debut des calculs
+    _trig.freq = (1.0/_trig.us)*1000000.0;
+    //_trig.usPerDegree = ((float)_trig.us / 360.0);
+    _trig.rpm = (_trig.freq * 60) / 2;
 
-  _trig.advanceTime = IGN_GetAdvance(_trig.rpm , 0);
+    _trig.usPerDegree = IGN_GetOneDegreeUs(_trig.rpm);
+    _trig.advanceTime = IGN_GetAdvance(_trig.rpm , 0);
 
-
+    //-- dwell de la bobine en fonction de la table
+    float dwellMs =     IGN_GetSparkDwellMs(_trig.rpm);
+	if (dwellMs <= 0.0)
+		return; // hard RPM limit was hit
 }
 
 float TRIGGER_GetAdvanceTime(void)
@@ -58,7 +62,8 @@ void TRIGGER_Execute(void)
 #ifdef SIMU_TRIGGER
 
     //-- pour simulation
-    if ( (uint32_t)(MICROS() - us ) >= 20000 )
+    uint32_t test = MICROS();
+    if ( (uint32_t)(test - us ) >= (uint32_t)20000 )
     {
         _TrigISR();
         us = MICROS();
