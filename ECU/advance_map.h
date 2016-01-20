@@ -19,5 +19,7 @@
 
 
 float IGN_GetAdvance(float rpm, float engineLoad);
+float IGN_GetOneDegreeUs(float  rpm);
+float IGN_GetSparkDwellMs(float rpm);
 
 #endif /* ADVANCE_H_ */

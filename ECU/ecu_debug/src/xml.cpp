@@ -38,12 +38,26 @@ xml::xml()
     for ( int i = 0 ; i < IGN_LOAD_COUNT ; i++)
         flashState.engineConfiguration.ignitionLoadBins[i] = i * 10;
 
+    for ( int i = 0 ; i < DWELL_COUNT ; i++)
+        flashState.engineConfiguration.sparkDwellBins[i] = i * 1000;
+
+    for ( int i = 0 ; i < DWELL_COUNT ; i++)
+        flashState.engineConfiguration.sparkDwell[i] = 3;
+
+
+    //-- rupteur a 8000 tr/min
+    flashState.engineConfiguration.rpmHardLimit = flashState.engineConfiguration.sparkDwellBins[DWELL_COUNT - 1];
+
+    flashState.engineConfiguration.ignitionOffset = 45;     //-- 45 degrée pour effectué les calcules
 
     uint8_t * ptr =  (uint8_t*)&flashState.engineConfiguration;
     for ( int i = 0 ; i < sizeof(engine_configuration_s) ; i++)
     {
         memfile[i] = ptr[i];
     }
+
+
+
 }
 
 xml::~xml()

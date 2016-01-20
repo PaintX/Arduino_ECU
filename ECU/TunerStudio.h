@@ -28,7 +28,7 @@ typedef struct
     /**
     * this value could be used to offset the whole ignition timing table by a constant
     */
-    float ignitionOffset;
+    float   ignitionOffset;
 
     int16_t rpmHardLimit;
     int16_t crankingRpm;

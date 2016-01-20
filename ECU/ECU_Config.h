@@ -43,7 +43,7 @@
     #define   SERIAL_PORT           Cons
 
     #define     MILLIS()            (clock()/double(CLOCKS_PER_SEC)*1000)
-    #define     MICROS()            clock()
+    #define     MICROS()            (clock()/double(CLOCKS_PER_SEC)*1000000)
 
 
     #define     LCD                 Cons

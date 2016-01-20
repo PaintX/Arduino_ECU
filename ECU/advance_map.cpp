@@ -33,3 +33,29 @@ float IGN_GetAdvance(float rpm, float engineLoad)
 
 	return getBaseAdvance(rpm, engineLoad) + flashState.engineConfiguration.ignitionOffset;
 }
+
+
+float IGN_GetOneDegreeUs(float  rpm)
+{
+    return (((1000.0 * 60.0) / 360.0) / rpm);
+}
+
+
+float IGN_GetSparkDwellMs(float rpm)
+{
+    /*if (isCrankingR(rpm))
+    {
+    // technically this could be implemented via interpolate2d
+    //FLOAT32 angle = engineConfiguration->crankingChargeAngle;
+    //return getOneDegreeTimeMs(rpm) * angle;
+    }*/
+
+    if (rpm > flashState.engineConfiguration.rpmHardLimit)
+    {
+        // technically this could be implemented via interpolate2d by setting everything above rpmHardLimit to zero
+       // CONS_PutS("skipping spark due to rpm=%d", rpm);
+        return 0.0;
+    }
+
+    return interpolate2d(rpm, flashState.engineConfiguration.sparkDwellBins, flashState.engineConfiguration.sparkDwell, DWELL_CURVE_SIZE);
+}
