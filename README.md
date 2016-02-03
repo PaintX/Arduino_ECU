@@ -1,2 +1,3 @@
 # Arduino_ECU
-First try for simply arduino ECU
+Create PCB for Speeduino ECU in SMD
+
