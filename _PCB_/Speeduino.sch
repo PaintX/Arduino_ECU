@@ -5,7 +5,7 @@ EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 1 4
+Sheet 1 5
 Title ""
 Date ""
 Rev ""
@@ -32,5 +32,11 @@ S 700  700  3250 1700
 U 56B219CA
 F0 "CPU_Board" 60
 F1 "CPU_Board.sch" 60
+$EndSheet
+$Sheet
+S 600  5200 2150 1150
+U 56B270A0
+F0 "Injector" 59
+F1 "Injector.sch" 59
 $EndSheet
 $EndSCHEMATC
