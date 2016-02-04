@@ -1,0 +1,115 @@
+EESchema Schematic File Version 2
+LIBS:Speeduino
+LIBS:Speeduino-cache
+EELAYER 25 0
+EELAYER END
+$Descr A4 11693 8268
+encoding utf-8
+Sheet 8 8
+Title ""
+Date ""
+Rev ""
+Comp ""
+Comment1 ""
+Comment2 ""
+Comment3 ""
+Comment4 ""
+$EndDescr
+$Comp
+L R R35
+U 1 1 56B3D2FE
+P 4800 2900
+F 0 "R35" V 4880 2900 50  0000 C CNN
+F 1 "2.49K" V 4800 2900 50  0000 C CNN
+F 2 "Speeduino:R_0603_HandSoldering" V 4730 2900 50  0001 C CNN
+F 3 "" H 4800 2900 50  0000 C CNN
+	1    4800 2900
+	1    0    0    -1  
+$EndComp
+$Comp
+L R R36
+U 1 1 56B3D3B5
+P 5100 3150
+F 0 "R36" V 5180 3150 50  0000 C CNN
+F 1 "470" V 5100 3150 50  0000 C CNN
+F 2 "Speeduino:R_0603_HandSoldering" V 5030 3150 50  0001 C CNN
+F 3 "" H 5100 3150 50  0000 C CNN
+	1    5100 3150
+	0    1    1    0   
+$EndComp
+$Comp
+L C C10
+U 1 1 56B3D3E3
+P 4800 3400
+F 0 "C10" H 4825 3500 50  0000 L CNN
+F 1 "100nF" H 4825 3300 50  0000 L CNN
+F 2 "Speeduino:C_0603_HandSoldering" H 4838 3250 50  0001 C CNN
+F 3 "" H 4800 3400 50  0000 C CNN
+	1    4800 3400
+	-1   0    0    1   
+$EndComp
+$Comp
+L C C11
+U 1 1 56B3D445
+P 5350 3400
+F 0 "C11" H 5375 3500 50  0000 L CNN
+F 1 "220nF" H 5375 3300 50  0000 L CNN
+F 2 "Speeduino:C_0603_HandSoldering" H 5388 3250 50  0001 C CNN
+F 3 "" H 5350 3400 50  0000 C CNN
+	1    5350 3400
+	-1   0    0    1   
+$EndComp
+Wire Wire Line
+	4800 3050 4800 3250
+Connection ~ 4800 3150
+Wire Wire Line
+	5250 3150 5650 3150
+Wire Wire Line
+	5350 3250 5350 3150
+Connection ~ 5350 3150
+$Comp
+L GND #PWR042
+U 1 1 56B3D4E9
+P 5350 3650
+F 0 "#PWR042" H 5350 3400 50  0001 C CNN
+F 1 "GND" H 5350 3500 50  0000 C CNN
+F 2 "" H 5350 3650 60  0000 C CNN
+F 3 "" H 5350 3650 60  0000 C CNN
+	1    5350 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L GND #PWR043
+U 1 1 56B3D505
+P 4800 3650
+F 0 "#PWR043" H 4800 3400 50  0001 C CNN
+F 1 "GND" H 4800 3500 50  0000 C CNN
+F 2 "" H 4800 3650 60  0000 C CNN
+F 3 "" H 4800 3650 60  0000 C CNN
+	1    4800 3650
+	1    0    0    -1  
+$EndComp
+$Comp
+L +5V #PWR044
+U 1 1 56B3D521
+P 4800 2650
+F 0 "#PWR044" H 4800 2500 50  0001 C CNN
+F 1 "+5V" H 4800 2790 50  0000 C CNN
+F 2 "" H 4800 2650 50  0000 C CNN
+F 3 "" H 4800 2650 50  0000 C CNN
+	1    4800 2650
+	1    0    0    -1  
+$EndComp
+Wire Wire Line
+	5350 3650 5350 3550
+Wire Wire Line
+	4800 3650 4800 3550
+Wire Wire Line
+	4800 2750 4800 2650
+Wire Wire Line
+	4950 3150 4600 3150
+Text GLabel 4600 3150 0    59   Input ~ 0
+CLT_Sensor
+Text GLabel 5650 3150 2    59   Input ~ 0
+CLT-CPU-A1
+$EndSCHEMATC
