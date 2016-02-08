@@ -5,7 +5,7 @@ EELAYER 25 0
 EELAYER END
 $Descr A4 11693 8268
 encoding utf-8
-Sheet 4 5
+Sheet 4 6
 Title ""
 Date ""
 Rev ""
@@ -46,4 +46,93 @@ Wire Wire Line
 Wire Wire Line
 	4200 2250 3900 2250
 Connection ~ 4200 2250
+$Comp
+L GND #PWR016
+U 1 1 56B9330A
+P 4000 4500
+F 0 "#PWR016" H 4000 4250 50  0001 C CNN
+F 1 "GND" H 4000 4350 50  0000 C CNN
+F 2 "" H 4000 4500 60  0000 C CNN
+F 3 "" H 4000 4500 60  0000 C CNN
+	1    4000 4500
+	0    1    1    0   
+$EndComp
+Wire Wire Line
+	4550 4450 4250 4450
+Wire Wire Line
+	4250 4450 4250 4550
+Wire Wire Line
+	4250 4550 4550 4550
+Wire Wire Line
+	4250 4500 4000 4500
+Connection ~ 4250 4500
+$Comp
+L GND #PWR017
+U 1 1 56B93380
+P 6900 1600
+F 0 "#PWR017" H 6900 1350 50  0001 C CNN
+F 1 "GND" H 6900 1450 50  0000 C CNN
+F 2 "" H 6900 1600 60  0000 C CNN
+F 3 "" H 6900 1600 60  0000 C CNN
+	1    6900 1600
+	0    -1   -1   0   
+$EndComp
+Wire Wire Line
+	6450 1600 6900 1600
+Text GLabel 4200 2600 0    59   Input ~ 0
+IAT_CPU_A0
+Text GLabel 4200 2700 0    59   Input ~ 0
+CLT_CPU_A1
+Text GLabel 4200 2800 0    59   Input ~ 0
+TPS_CPU_A2
+Text GLabel 4200 2900 0    59   Input ~ 0
+MAP_CPU_A3
+Text GLabel 4200 3000 0    59   Input ~ 0
+BRV_CPU_A4
+Text GLabel 4200 3500 0    59   Input ~ 0
+O2_CPU_A8
+Wire Wire Line
+	4200 2600 4550 2600
+Wire Wire Line
+	4550 2700 4200 2700
+Wire Wire Line
+	4200 2800 4550 2800
+Wire Wire Line
+	4550 2900 4200 2900
+Wire Wire Line
+	4200 3000 4550 3000
+Wire Wire Line
+	4550 3500 4200 3500
+Text GLabel 6950 1900 2    59   Input ~ 0
+INJ4_CPU_D11
+Text GLabel 6950 2000 2    59   Input ~ 0
+INJ3_CPU_D10
+Text GLabel 6950 2100 2    59   Input ~ 0
+INJ2_CPU_D9
+Text GLabel 6950 2200 2    59   Input ~ 0
+INJ1_CPU_D8
+Wire Wire Line
+	6450 1900 6950 1900
+Wire Wire Line
+	6950 2000 6450 2000
+Wire Wire Line
+	6450 2100 6950 2100
+Wire Wire Line
+	6950 2200 6450 2200
+Text GLabel 4150 6100 0    59   Input ~ 0
+IGN1_CPU_D40
+Wire Wire Line
+	4550 6100 4150 6100
+Text GLabel 4150 6300 0    59   Input ~ 0
+IGN2_CPU_D38
+Wire Wire Line
+	4550 6300 4150 6300
+Text GLabel 4150 5000 0    59   Input ~ 0
+IGN4_CPU_D50
+Text GLabel 4150 4800 0    59   Input ~ 0
+IGN3_CPU_D52
+Wire Wire Line
+	4550 4800 4150 4800
+Wire Wire Line
+	4550 5000 4150 5000
 $EndSCHEMATC
