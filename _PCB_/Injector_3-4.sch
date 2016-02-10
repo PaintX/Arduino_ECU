@@ -132,9 +132,9 @@ Wire Wire Line
 Wire Wire Line
 	3900 3700 3400 3700
 Text GLabel 3400 3600 0    59   Input ~ 0
-INJ3-CPU-D10
+INJ3_CPU_D10
 Text GLabel 3400 3700 0    59   Input ~ 0
-INJ4-CPU-D11
+INJ4_CPU_D11
 $Comp
 L LED D7
 U 1 1 56B25755
